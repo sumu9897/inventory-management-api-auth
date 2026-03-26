@@ -3,7 +3,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-
+const authRoutes = require("./routes/authRoutes");
+const itemRoutes = require("./routes/itemRoutes");
+const errorHandler  = require("./middlewares/errorHandler");
+const notFound = require("./middlewares/notFound");
 
 dotenv.config();
 
@@ -26,5 +29,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/items", itemRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;
